@@ -1,0 +1,23 @@
+{% extends 'home.html'%}
+{% block content %}
+<body>
+    <h2>
+        {{ name }}
+    </h2>
+    {% if role == 'admin' %}
+    <h1>
+        {% else %}
+    </h1>
+    <h1>
+        user block
+    </h1>
+    {%  endif %}
+    <ul>
+        {% for i in language %}
+        <li>{{i}}</li>
+        {% endfor %}
+    </ul>
+<button onclick="a()">
+    click
+</button>
+{% endblock %}

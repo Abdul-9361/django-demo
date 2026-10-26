@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">save</button>
+</form>
+{% if messages %}
+{% for i in messages %}
+<p class=""text-success>
+    {{ i }}
+</p>
+{% endfor %}
+{% endif %}
+{% for i in products %}
+<li>
+    {{ i.name }}
+    <a href="{% url 'delete_product' i.id %}">
+        Remove
+    </a>
+    <a href="{% url 'data_update' i.id %}">
+        Edit
+    </a>
+</li>
+{% endfor %}
+
+{% if products.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{ products.previous_page_number }}">Previous</a>
+{% endif %}
+
+<span>
+    page {{ products.number }} of {{ products.paginator.num_pages }}
+</span>
+
+{% if products.has_next %}
+<a href="?page={{ products.next_page_number }}">Next</a>
+<a href="?page={{ products.paginator.num_pages }}">Last</a>
+{% endif %}
+
+{% endblock %}

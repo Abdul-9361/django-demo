@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Expense Tracker</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .container {
+            width: 290px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #520080;
+            font-weight: normal;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .summary {
+            display: flex;
+            background: white;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .income,
+        .expense {
+            width: 50%;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .income {
+            border-right: 1px solid #ddd;
+        }
+
+        .income p {
+            color: #20b56b;
+        }
+
+        .expense p {
+            color: #b04444;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 11px;
+            background: #5b008f;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #43006b;
+        }
+
+        .expense-list {
+            margin-top: 25px;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 12px;
+            margin-bottom: 5px;
+            border-right: 5px solid #20b56b;
+            box-shadow: 0 1px 2px #ccc;
+        }
+
+        .balance {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Expense Tracker</h1>
+
+    <div class="summary">
+
+        <div class="income">
+
+            <b>INCOME</b>
+
+            <p>
+                ${{ income }}
+            </p>
+
+        </div>
+
+
+        <div class="expense">
+
+            <b>EXPENSE</b>
+
+            <p>
+                ${{ total_expense }}
+            </p>
+
+        </div>
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input
+            type="number"
+            name="income"
+            placeholder="Enter Your Income"
+            step="0.01"
+            required
+        >
+
+        <button type="submit">
+            Add Income
+        </button>
+
+    </form>
+
+    <p class="balance">
+        TOTAL BALANCE: ${{ balance }}
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Item</label>
+
+        <input
+            type="text"
+            name="item"
+            placeholder="Enter Item"
+            required
+        >
+
+
+        <label>Amount</label>
+
+        <input
+            type="number"
+            name="amount"
+            placeholder="0"
+            step="0.01"
+            required
+        >
+
+
+        <button type="submit">
+            Add Expenses
+        </button>
+
+    </form>
+
+    <div class="expense-list">
+
+        {% for i in expenses %}
+
+            <div class="expense-item">
+
+                <span>
+                    {{ i.item }}
+                </span>
+
+                <span>
+                    ${{ i.amount }}
+                </span>
+
+            </div>
+
+        {% empty %}
+
+            <p>No expenses added.</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
